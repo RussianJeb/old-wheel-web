@@ -17,7 +17,6 @@ import java.util.Optional;
 /**
  * @author Jeb
  */
-@Slf4j
 @Service
 public class DefaultSkinService implements SkinService {
     private final SkinRepository skinRepository;
@@ -30,7 +29,6 @@ public class DefaultSkinService implements SkinService {
     @CachePut(value = "skin", key = "#player.name")
     public Optional<Skin> changeSkin(Player player, MultipartFile skinFile) throws IOException {
         Skin skin = player.getSkin();
-        log.info("Invoked change");
         skin.setContent(skinFile.getBytes());
         return Optional.of(skinRepository.save(skin));
     }
@@ -48,7 +46,6 @@ public class DefaultSkinService implements SkinService {
     @Override
     @Cacheable(value = "skin", key = "#name")
     public Optional<Skin> findSkinByName(String name) {
-        log.info("Invoked get");
         return skinRepository.findByNameIgnoreCase(name);
     }
 }
